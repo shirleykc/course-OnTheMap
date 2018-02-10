@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E407D09B20288DB30038B60C /* StudentLocationCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E407D09A20288DB30038B60C /* StudentLocationCollection.swift */; };
 		E41810CC1FF991490046B9CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41810CB1FF991490046B9CA /* AppDelegate.swift */; };
 		E41810CE1FF991490046B9CA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41810CD1FF991490046B9CA /* LoginViewController.swift */; };
 		E41810D11FF991490046B9CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E41810CF1FF991490046B9CA /* Main.storyboard */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E407D09A20288DB30038B60C /* StudentLocationCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentLocationCollection.swift; sourceTree = "<group>"; };
 		E41810C81FF991490046B9CA /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E41810CB1FF991490046B9CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E41810CD1FF991490046B9CA /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				E41810EA1FF9D6A50046B9CA /* UdacityClient.swift */,
 				E41810EE1FFAA66F0046B9CA /* UdacityConvenience.swift */,
 				E4546D781FFB5F4200393B80 /* StudentInformation.swift */,
+				E407D09A20288DB30038B60C /* StudentLocationCollection.swift */,
 			);
 			name = Udacity;
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 				E4F5DBE420018A8000DF540F /* MapTabBarController.swift in Sources */,
 				E41810E51FF9D1290046B9CA /* BorderedButton.swift in Sources */,
 				E41810EF1FFAA66F0046B9CA /* UdacityConvenience.swift in Sources */,
+				E407D09B20288DB30038B60C /* StudentLocationCollection.swift in Sources */,
 				E4546D791FFB5F4200393B80 /* StudentInformation.swift in Sources */,
 				E41810F11FFABE210046B9CA /* GCDBlackBox.swift in Sources */,
 				E4BFA85020032D4A007B052A /* MapViewController.swift in Sources */,

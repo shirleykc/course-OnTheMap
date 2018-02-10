@@ -116,20 +116,19 @@ private extension MapTabBarController {
         UdacityClient.sharedInstance().getStudentLocations { (locations, error) in
             if let locations = locations {
                 if let controller = self.selectedViewController as? LocationListViewController {
-                    controller.locations = locations
+                    controller.studentLocations.locations = locations
                     performUIUpdatesOnMain {
                         controller.locationsTableView.reloadData()
                     }
                 } else if let controller = self.selectedViewController as? MapViewController {
-                    controller.locations = locations
+                    controller.studentLocations.locations = locations
                     performUIUpdatesOnMain {
                         controller.createAnnotations()
                         
                         // center the map on the latest student location
-                        if let latestLoc = controller.locations.first {
+                        if let latestLoc = controller.studentLocations.locations!.first {
                             controller.centerMapOnStudentLocation(location: latestLoc)
                         }
-                        controller.mapView.addAnnotations(controller.annotations)
                     }
                 } else {
                     print(error ?? "empty error")

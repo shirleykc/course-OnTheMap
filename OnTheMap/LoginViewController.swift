@@ -42,11 +42,7 @@ class LoginViewController: UIViewController {
 
         configureUI()
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
+        
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         usernameTextField.text = ""
@@ -84,7 +80,7 @@ class LoginViewController: UIViewController {
                         self.completeLogin()
                     } else {
                         print(errorString!)
-                        self.displayError("Unable to login, please try again")
+                        self.displayError(errorString!)
                     }
                 }
             }

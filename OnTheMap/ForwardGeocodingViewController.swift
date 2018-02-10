@@ -67,6 +67,10 @@ class ForwardGeocodingViewController: UIViewController {
             let placeCountry = place?.country,
             let placeLocation = place?.location {
             
+            // first, remove previous annotations
+            let allannotations = mapView.annotations
+            mapView.removeAnnotations(allannotations)
+
             // Here we create the annotation and set its coordiate, title, and subtitle properties
             let annotation = MKPointAnnotation()
             annotation.coordinate = placeLocation.coordinate

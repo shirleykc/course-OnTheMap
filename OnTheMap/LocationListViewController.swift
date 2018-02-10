@@ -19,8 +19,7 @@ class LocationListViewController: UIViewController {
     // MARK: Properties
     
     var appDelegate: AppDelegate!
-    
-    var locations: [StudentInformation] = [StudentInformation]()
+    var studentLocations: StudentLocationCollection!
     
     // MARK: Outlets
     
@@ -35,6 +34,9 @@ class LocationListViewController: UIViewController {
         
         /* Grab the app delegate */
         appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        /* Grab the student locations */
+        studentLocations = StudentLocationCollection.sharedInstance()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,8 +46,8 @@ class LocationListViewController: UIViewController {
         UdacityClient.sharedInstance().getStudentLocations { (locations, error) in
             performUIUpdatesOnMain {
                 self.activityIndicatorView.stopAnimating()
-                if let locations = locations {
-                    self.locations = locations
+                if let locs = locations {
+                    self.studentLocations.locations = locs
                     self.locationsTableView.reloadData()
                 } else {
                     print(error ?? "empty error")
@@ -66,25 +68,28 @@ extension LocationListViewController: UITableViewDelegate, UITableViewDataSource
         
         /* Get cell type */
         let cellReuseIdentifier = "StudentLocationTableCell"
-        let location = locations[(indexPath as NSIndexPath).row]
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as! StudentLocationTableCell
-        
-        /* Set cell defaults */
-        var firstName = location.firstName
-        if firstName == nil {
-            firstName = ""
+
+        if let locations = studentLocations.locations {
+            let location = locations[(indexPath as NSIndexPath).row]
+            
+            /* Set cell defaults */
+            var firstName = location.firstName
+            if firstName == nil {
+                firstName = ""
+            }
+            var lastName = location.lastName
+            if lastName == nil {
+                lastName = ""
+            }
+            cell.studentNameLabel?.text = "\(firstName!) \(lastName!)"
+            
+            var mediaURL = location.mediaURL
+            if mediaURL == nil {
+                mediaURL = ""
+            }
+            cell.mediaURLLabel?.text = "\(mediaURL!)"
         }
-        var lastName = location.lastName
-        if lastName == nil {
-            lastName = ""
-        }
-        cell.studentNameLabel?.text = "\(firstName!) \(lastName!)"
-        
-        var mediaURL = location.mediaURL
-        if mediaURL == nil {
-            mediaURL = ""
-        }
-        cell.mediaURLLabel?.text = "\(mediaURL!)"
             
         return cell
     }
@@ -92,14 +97,26 @@ extension LocationListViewController: UITableViewDelegate, UITableViewDataSource
     // MARK: tableView - numberOfRowsInSection
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return locations.count
+        if let locations = studentLocations.locations {
+            return locations.count
+        } else {
+            return 0
+        }
     }
     
     // MARK: tableView - didSelectRowAt
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let locations = studentLocations.locations else {
+            appDelegate.presentAlert(self, "No student locations available")
+            return
+        }
+        
         let studentInformation = locations[(indexPath as NSIndexPath).row]
 
+        // deselect the selected row
+        tableView.deselectRow(at: indexPath, animated: true)
+        
         guard let mediaURLString = studentInformation.mediaURL else {
             appDelegate.presentAlert(self, "Invalid URL")
             return

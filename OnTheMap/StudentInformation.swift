@@ -36,26 +36,14 @@ struct StudentInformation {
         latitude = dictionary[UdacityClient.JSONResponseKeys.Latitude] as? Double
         longitude = dictionary[UdacityClient.JSONResponseKeys.Longitude] as? Double
     }
-    
-    // Build a collection of StudentInformation from dictionary collection
-    
-    static func locationsFromResults(_ results: [[String:AnyObject]]) -> [StudentInformation] {
-        
-        var locations = [StudentInformation]()
-        
-        // iterate through array of dictionaries, each location is a dictionary
-        for result in results {
-            locations.append(StudentInformation(dictionary: result))
-        }
-        
-        return locations
-    }
 }
 
 // MARK: - StudentInformation: Equatable
 
-extension StudentInformation: Equatable {}
+extension StudentInformation: Equatable {
 
-func ==(lhs: StudentInformation, rhs: StudentInformation) -> Bool {
-    return lhs.objectId == rhs.objectId
+    static func ==(lhs: StudentInformation, rhs: StudentInformation) -> Bool {
+        return lhs.objectId == rhs.objectId
+    }
 }
+

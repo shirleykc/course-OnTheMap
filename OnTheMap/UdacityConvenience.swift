@@ -90,8 +90,8 @@ extension UdacityClient {
                 
                 if let results = results?[UdacityClient.JSONResponseKeys.Results] as? [[String:AnyObject]] {
                     
-                    let locations = StudentInformation.locationsFromResults(results)
-                    completionHandlerForLocationlist(locations, nil)
+                    StudentLocationCollection.locationsFromResults(results)
+                    completionHandlerForLocationlist(StudentLocationCollection.sharedInstance().locations, nil)
                 } else {
                     completionHandlerForLocationlist(nil, NSError(domain: "getStudentLocations parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getStudentLocations"]))
                 }

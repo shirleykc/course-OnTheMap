@@ -30,8 +30,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     var appDelegate: AppDelegate!
     var completionHandlerForOpenURL: ((_ success: Bool) -> Void)?
 
-    var locations: [StudentInformation] = [StudentInformation]()
-    var annotations: [MKPointAnnotation] = [MKPointAnnotation]()
+    var studentLocations: StudentLocationCollection!
+//    var annotations = [MKPointAnnotation]()
 
     // The map. See the setup in the Storyboard file. Note particularly that the view controller
     // is set up as the map view's delegate.
@@ -43,6 +43,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
  
         /* Grab the app delegate */
         appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        /* Grab the student locations */
+        studentLocations = StudentLocationCollection.sharedInstance()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,12 +59,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         UdacityClient.sharedInstance().getStudentLocations { (locations, error) in
             performUIUpdatesOnMain {
                 self.activityIndicatorView.stopAnimating()
-                if let locations = locations {
-                    self.locations = locations
+                if let locs = locations {
+                    self.studentLocations.locations = locs
                     self.createAnnotations()
                     
                     // center the map on the latest student location
-                    if let latestLoc = self.locations.first {
+                    if let latestLoc = self.studentLocations.locations!.first {
                         self.centerMapOnStudentLocation(location: latestLoc)
                     }
                 } else {
@@ -83,6 +86,15 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func createAnnotations() {
         
         // Create an MKPointAnnotation for each dictionary in locations.
+        
+        guard let locations = studentLocations.locations else {
+            appDelegate.presentAlert(self, "No student locations available")
+            return
+        }
+        
+        // first, remove previous annotations
+        let allannotations = mapView.annotations
+        mapView.removeAnnotations(allannotations)
         
         for student in locations {
             
@@ -113,13 +125,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 annotation.title = "\(firstName!) \(lastName!)"
                 annotation.subtitle = mediaURL
                 
-                // place the annotation in an array of annotations.
-                annotations.append(annotation)
+                // add annotation to the map
+                mapView.addAnnotation(annotation)
             }
         }
-        
-        // add the annotations to the map.
-        self.mapView.addAnnotations(annotations)
     }
     
     // MARK: - MKMapViewDelegate
