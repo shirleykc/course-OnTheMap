@@ -31,7 +31,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     var completionHandlerForOpenURL: ((_ success: Bool) -> Void)?
 
     var studentLocations: StudentLocationCollection!
-//    var annotations = [MKPointAnnotation]()
 
     // The map. See the setup in the Storyboard file. Note particularly that the view controller
     // is set up as the map view's delegate.
